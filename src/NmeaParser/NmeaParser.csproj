@@ -36,6 +36,9 @@ All messages now have a unique timestamp useful to expire older messages.</Packa
     <PackageIcon>logo.png</PackageIcon>
     <PackageIconUrl />
     <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
