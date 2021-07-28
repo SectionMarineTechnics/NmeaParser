@@ -912,5 +912,71 @@ namespace NmeaParser.Tests
                 return true;
             }
         }
+
+        //checksum calculator website: https://nmeachecksum.eqth.net/
+        [TestMethod]
+        public void TestPrmaBelgica_Alarm()
+        {
+            string input = "$PRMA,1,15:36:45.13,UA,IU01 Power Supply 230V AC,Alarm*6C";
+            var msg = NmeaMessage.Parse(input);
+            Assert.IsInstanceOfType(msg, typeof(PrmaBelgica));
+            PrmaBelgica test_prma_belgica = (PrmaBelgica)msg;
+
+            Assert.AreEqual(PrmaBelgica.AlertId.Alarm, test_prma_belgica.Alert_id);
+            Assert.AreEqual(new TimeSpan(0, 15, 36, 45, 130), test_prma_belgica.TimeOfStateChange);
+            Assert.AreEqual(PrmaBelgica.AlarmState.UA, test_prma_belgica.State);
+            Assert.AreEqual("IU01 Power Supply 230V AC", test_prma_belgica.AlarmDescription);
+            Assert.AreEqual("Alarm", test_prma_belgica.AlarmText);
+            Assert.IsFalse(test_prma_belgica.DoorHatchesStatus[0]);
+            Assert.AreEqual(1,test_prma_belgica.DoorHatchesStatus.Length);
+        }
+
+        [TestMethod]
+        public void TestPrmaBelgica_Alive()
+        {
+            string input = "$PRMA,2,ACON-R_ALIVE*48";
+            var msg = NmeaMessage.Parse(input);
+            Assert.IsInstanceOfType(msg, typeof(PrmaBelgica));
+            PrmaBelgica test_prma_belgica = (PrmaBelgica)msg;
+
+            Assert.AreEqual(PrmaBelgica.AlertId.Alive, test_prma_belgica.Alert_id);
+            Assert.AreEqual("ACON-R_ALIVE", test_prma_belgica.AlarmDescription);
+
+            Assert.AreEqual(TimeSpan.Zero, test_prma_belgica.TimeOfStateChange);
+            Assert.AreEqual("", test_prma_belgica.AlarmText);
+            Assert.IsFalse(test_prma_belgica.DoorHatchesStatus[0]);
+            Assert.AreEqual(1, test_prma_belgica.DoorHatchesStatus.Length);
+        }
+
+        [TestMethod]
+        public void TestPrmaBelgica_DoorHatch()
+        {
+            string input = "$PRMA,4,1,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*17";
+            var msg = NmeaMessage.Parse(input);
+            Assert.IsInstanceOfType(msg, typeof(PrmaBelgica));
+            PrmaBelgica test_prma_belgica = (PrmaBelgica)msg;
+
+            Assert.AreEqual(PrmaBelgica.AlertId.DoorHatch, test_prma_belgica.Alert_id);
+
+            Assert.AreEqual(32, test_prma_belgica.DoorHatchesStatus.Length);
+
+            Assert.IsTrue(test_prma_belgica.DoorHatchesStatus[0]);
+            Assert.IsFalse(test_prma_belgica.DoorHatchesStatus[1]);
+            Assert.IsTrue(test_prma_belgica.DoorHatchesStatus[2]);
+            Assert.IsFalse(test_prma_belgica.DoorHatchesStatus[3]);
+            Assert.IsTrue(test_prma_belgica.DoorHatchesStatus[4]);
+            Assert.IsTrue(test_prma_belgica.DoorHatchesStatus[5]);
+            Assert.IsFalse(test_prma_belgica.DoorHatchesStatus[6]);
+
+            for(int i=7; i< 32; i++)
+            {
+                Assert.IsTrue(test_prma_belgica.DoorHatchesStatus[i]);
+            }
+
+            Assert.AreEqual("", test_prma_belgica.AlarmDescription);
+            Assert.AreEqual(TimeSpan.Zero, test_prma_belgica.TimeOfStateChange);
+            Assert.AreEqual("", test_prma_belgica.AlarmText);
+        }
+
     }
 }
