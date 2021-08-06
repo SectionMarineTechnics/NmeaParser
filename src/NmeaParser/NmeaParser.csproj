@@ -39,13 +39,14 @@ All messages now have a unique timestamp useful to expire older messages.</Packa
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
+    <UserSecretsId>032f4745-c6f5-4711-b3eb-bc2529712af5</UserSecretsId>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
     <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
+    <DefineConstants>TRACE;NETSTANDARD</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(TargetFramework)' == 'net451'">

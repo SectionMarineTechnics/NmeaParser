@@ -951,7 +951,7 @@ namespace NmeaParser.Tests
         [TestMethod]
         public void TestPrmaBelgica_DoorHatch()
         {
-            string input = "$PRMA,4,1,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*17";
+            string input = "$PRMA,4,1,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0*0B";
             var msg = NmeaMessage.Parse(input);
             Assert.IsInstanceOfType(msg, typeof(PrmaBelgica));
             PrmaBelgica test_prma_belgica = (PrmaBelgica)msg;

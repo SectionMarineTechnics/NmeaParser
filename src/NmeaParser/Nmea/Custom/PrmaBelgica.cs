@@ -122,7 +122,7 @@ namespace NmeaParser.Messages
                     State = (AlarmState)Enum.Parse(typeof(AlarmState), message[2]);
                     AlarmDescription = message[3];
                     AlarmText = message[4];
-                    DoorHatchesStatus = new bool[1];
+                    DoorHatchesStatus = null;
                     break;
                 case AlertId.Alive:
 
@@ -132,7 +132,7 @@ namespace NmeaParser.Messages
                     TimeOfStateChange = TimeSpan.Zero;
                     State = AlarmState.NL;
                     AlarmText = "";
-                    DoorHatchesStatus = new bool[1] { false };
+                    DoorHatchesStatus = null;
                     break;
                 case AlertId.DoorHatch:
                     int message_array_length = message.Length;
@@ -187,7 +187,7 @@ namespace NmeaParser.Messages
         /// <summary>
         /// Door hatches status (false = open, true = closed)
         /// </summary>
-        public bool[] DoorHatchesStatus { get; } = { false };
+        public bool[]? DoorHatchesStatus { get; } = null;
 
     }
 }
