@@ -57,37 +57,29 @@ namespace NmeaParser.Messages
             /// </summary>
             NL = -1,
             /// <summary>
+            /// Normal (no alarm)
+            /// </summary>
+            OK = 0,
+            /// <summary>
             /// Inhibited alarm state
             /// </summary>
-            INH = 0,
+            INH ,
             /// <summary>
             /// Blocked alarm state
             /// </summary>
             BLC,
             /// <summary>
-            /// Set alarm state
+            /// Transferred
             /// </summary>
-            SET,
+            TR,
             /// <summary>
-            /// Acknowledged Error alarm state
+            /// Cleared, rectified
             /// </summary>
-            AE,
+            CLR,
             /// <summary>
             /// Acknowledged alarm state
             /// </summary>
             AA,
-            /// <summary>
-            /// Cleared Error alarm state
-            /// </summary>
-            CE,
-            /// <summary>
-            /// Cleared alarm state
-            /// </summary>
-            CA,
-            /// <summary>
-            /// Unacknowledged Error alarm state
-            /// </summary>
-            UE,
             /// <summary>
             /// Unacknowledged alarm state
             /// </summary>
