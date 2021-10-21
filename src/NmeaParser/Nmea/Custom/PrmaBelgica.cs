@@ -42,6 +42,10 @@ namespace NmeaParser.Messages
             /// </summary>
             Alive = 2,
             /// <summary>
+            /// Message with the SFI and ISA address in the description
+            /// </summary>
+            Sfi_isa = 3,
+            /// <summary>
             /// Door hatch message
             /// </summary>
             DoorHatch = 4
@@ -124,6 +128,21 @@ namespace NmeaParser.Messages
                     TimeOfStateChange = TimeSpan.Zero;
                     State = AlarmState.NL;
                     AlarmText = "";
+                    DoorHatchesStatus = null;
+                    break;
+                case AlertId.Sfi_isa:
+                    if (message[1].Contains(":"))
+                    {
+                        TimeOfStateChange = new TimeSpan(0, int.Parse(message[1].Substring(0, 2)), int.Parse(message[1].Substring(3, 2)), int.Parse(message[1].Substring(6, 2)), 10 * int.Parse(message[1].Substring(9, 2)));
+                    }
+                    else
+                    {
+                        TimeOfStateChange = new TimeSpan(0, int.Parse(message[1].Substring(0, 2)), int.Parse(message[1].Substring(2, 2)), int.Parse(message[1].Substring(4, 2)), 10 * int.Parse(message[1].Substring(7, 2)));
+                    }
+                    State = (AlarmState)Enum.Parse(typeof(AlarmState), message[2]);
+                    //only interested in the first part of the description -> SFI address
+                    AlarmDescription = (message[3].Split('_'))[0]; 
+                    AlarmText = message[4];
                     DoorHatchesStatus = null;
                     break;
                 case AlertId.DoorHatch:
